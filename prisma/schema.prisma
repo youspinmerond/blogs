@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  body      String
+  createdAt DateTime @default(now())
+  PostId    Int
+  UserId    Int
+  status    status   @default(AVIABLE)
+  Post      Post     @relation(fields: [PostId], references: [id])
+  User      User     @relation(fields: [UserId], references: [id])
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  body      String
+  rank      Int       @default(0)
+  createdAt DateTime  @default(now())
+  userId    Int
+  status    status    @default(AVIABLE)
+  Comment   Comment[]
+  User      User      @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  avatar     String
+  email      String    @unique
+  name       String    @unique
+  role       String[]  @default(["USER"])
+  rank       Int       @default(0)
+  isVerefied Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  password   String
+  status     status    @default(AVIABLE)
+  Comment    Comment[]
+  Post       Post[]
+  Vote       Vote[]
+}
+
+model Vote {
+  Score   VoteScore
+  Type    VoteType
+  isVoted Boolean
+  UserId  Int       @id
+  User    User      @relation(fields: [UserId], references: [id])
+}
+
+enum VoteScore {
+  UP
+  DOWN
+}
+
+enum VoteType {
+  POST
+  COMMENT
+  USER
+}
+
+enum role {
+  ADMIN
+  USER
+  GUEST
+  BANNED
+}
+
+enum status {
+  AVIABLE
+  BANNED
+}
