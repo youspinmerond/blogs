@@ -3,5 +3,5 @@ export default function Layout({children}:any) {
     <div>
       {children}
     </div>
-  )
+  );
 }

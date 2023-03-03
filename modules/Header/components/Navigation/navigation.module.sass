@@ -1,0 +1,56 @@
+@import ../../../../styles/variables
+
+.nav
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+
+  &Phone
+    display: none
+
+  &>*
+    margin-left: 2.625rem
+    padding: .5rem
+    border: 0
+    background: 0
+    cursor: pointer
+    font-weight: 700
+    transition: .5s
+
+    &:hover
+      background: $blue
+      color: #fff
+      border-radius: .25rem
+      transition: .25s
+
+    &:first-child
+      margin: 0
+
+@media screen and ( max-width: 56.25rem )
+  .nav
+    display: none
+
+    &Phone
+      display: block
+      border: none
+      border-radius: .25rem
+      background: $blue
+      color: #fff
+      padding: .75rem 1.125rem
+      font-weight: 700
+
+
+.support
+  display: flex
+  align-items: center
+  background: $blue
+  color: #fff
+  border-radius: .25rem
+  padding: .75rem 1.125rem
+
+  &:hover
+    background: $gold
+    color: $darkBlue
+
+  &>span
+    margin: 0 0 0 .25rem

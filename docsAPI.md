@@ -51,10 +51,17 @@ Deleting post. Post can delete only owner( or user with ADMIN permissions ).
 ### read
 
 /posts/read
+GET
 * JSON params
 * * id: number
 
 Returning post information.
+
+### getNew
+
+/posts/getNew
+
+returning newest posts.
 
 ## users
 

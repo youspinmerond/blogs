@@ -1,0 +1,33 @@
+.section
+  margin: 2rem
+  
+.posts
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+
+@media screen and ( max-width: 56.25rem )
+  .section > h1
+    display: flex
+    justify-content: center
+    font-size: 2rem
+
+  .posts
+    justify-content: center
+
+.post
+  border: 2px solid black
+  border-radius: .75rem
+  margin: 1rem .25rem
+  padding: 1rem
+
+  width: 25rem
+  height: 10rem
+
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+  &Bottom
+    display: flex
+    justify-content: flex-end
