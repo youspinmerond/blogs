@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function read(id: number) {
   const result = await prisma.comment.findUnique({
@@ -15,6 +15,6 @@ export default async function read(id: number) {
       status: true
 
     }
-  })
-  return result
+  });
+  return result;
 }

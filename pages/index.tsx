@@ -1,4 +1,3 @@
-import Header from "@/modules/Header/Header";
 import styles from "../styles/Home.module.sass";
 
 interface IPost {
@@ -15,13 +14,12 @@ export default function Home({posts}:any) {
 
   return (
     <div style={{fontFamily:"sans-serif, lato"}}>
-      <Header/>
       <section className={styles.section}>
         <h1>Newest posts</h1>
         <div className={styles.posts}>
           {
             posts.map((post:IPost) => (
-              <div className={styles.post} key={post.id}>
+              <div className={styles.post} key={post.id} onClick={() => location.href = "http://localhost:3000/article/"+post.id}>
                 <div className="top">
                   <h1>{post.title}</h1>
                 </div>

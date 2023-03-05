@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function readPost(id:number) {
   const post = await prisma.post.findUnique({
@@ -11,8 +11,9 @@ export default async function readPost(id:number) {
       title: true,
       body: true,
       userId: true,
-      Comment: true
+      Comment: true,
+      createdAt: true
     }
-  })
-  return post
+  });
+  return post;
 }

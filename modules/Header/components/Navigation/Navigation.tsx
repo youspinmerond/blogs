@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import coffee from "public/coffee.svg";
 import styles from "./navigation.module.sass";
 
@@ -6,15 +7,15 @@ export default function Navigation() {
   return (
     <nav>
       <div className={styles.nav}>
-        <button className="home">Home</button>
-        <button className="about">About</button>
-        <button className="search">Search</button>
-        <button className="search">Sign in</button>
-        <button className="search">Sign up</button>
-        <button className={styles.support}>
+        <Link href="/" className="home">Home</Link>
+        <Link href="/about" className="about">About</Link>
+        <Link href="#" className="search">Search</Link>
+        <Link href="#" className="login">Sign in</Link>
+        <Link href="#" className="register">Sign up</Link>
+        <Link href="#" className={styles.support}>
           <Image src={coffee.src} alt="Coffee" width={16} height={16}/>
-          <span>Support</span>
-        </button>
+          <span>Buy Us A Coffe</span>
+        </Link>
       </div>
       <button className={styles.navPhone}>
           Nav

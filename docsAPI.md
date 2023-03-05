@@ -50,10 +50,8 @@ Deleting post. Post can delete only owner( or user with ADMIN permissions ).
 
 ### read
 
-/posts/read
+/posts/read/?id=number
 GET
-* JSON params
-* * id: number
 
 Returning post information.
 
