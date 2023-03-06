@@ -1,5 +1,4 @@
 import * as user from "@/services/users";
-import { compareSync } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface IUser {
@@ -11,7 +10,7 @@ interface IUser {
 
 export default async function createUser(req: NextApiRequest, res: NextApiResponse) {
   
-  const body: IUser = req.body;
+  const body: IUser = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   if(!body) return res.status(400).json({message:"Wrong body fields."});
   if(!body.name) return res.status(400).json({message:"You didn't specified \"name\" field."});

@@ -18,7 +18,7 @@ export default function Navigation() {
             : (
               <>
                 <Link href="/login" className="login">Sign in</Link>
-                <Link href="#" className="register">Sign up</Link>
+                <Link href="/register" className="register">Sign up</Link>
               </>
             )
         }

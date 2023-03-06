@@ -12,7 +12,7 @@ export default function About() {
       <br />
       <p>It has API, you can get any information about Blogs from there.</p>
       <br />
-      <p>
+      <div>
         <h3>What I did for just now:</h3>
         <ul className={styles.ul}>
           <li>
@@ -54,7 +54,7 @@ export default function About() {
         <br />
         <h3>For this moment</h3>
         <p>You can use API and write your own client.</p>
-      </p>
+      </div>
     </section>
   );
 }

@@ -3,7 +3,6 @@ import styles from "../styles/profile.module.sass";
 export default function Profile() {
 
   const user = useSelector((state:any) => state).login;
-  console.log(user);
 
   return (
     <section className={styles.section}>
