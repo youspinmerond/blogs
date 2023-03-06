@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../styles/Home.module.sass";
 
 interface IPost {
@@ -19,21 +20,21 @@ export default function Home({posts}:any) {
         <div className={styles.posts}>
           {
             posts.map((post:IPost) => (
-              <div className={styles.post} key={post.id} onClick={() => location.href = "http://localhost:3000/article/"+post.id}>
+              <Link className={styles.post} key={post.id} href={"http://localhost:3000/article/"+post.id}>
                 <div className="top">
                   <h1>{post.title}</h1>
                 </div>
                 <div className="body">
-                  {post.body}
+                  {post.body.length <= 20 ? post.body : post.body.slice(0,50)+"..."}
                 </div>
-                <div className={styles.postBottom}>
+                <div className={styles.postBottom}> 
                   <span>
                     {post.rank},&nbsp;
                     {new Date(post.createdAt).toLocaleDateString()},&nbsp;
                     {new Date(post.createdAt).toLocaleTimeString()}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))
           }
         </div>
@@ -43,7 +44,6 @@ export default function Home({posts}:any) {
 }
 
 export async function getServerSideProps() {
-
   const posts = await fetch("http://localhost:3000/api/posts/getNew", {method:"GET"})
     .then(res => res.json());
 

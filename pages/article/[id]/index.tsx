@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import Comment from "@/components/comment/Comment";
+import Button from "@/components/UI/Button/Button";
 import styles from "../../../styles/article.module.sass";
 
 interface IArticle {
@@ -44,6 +45,9 @@ export default function Article({article}: {article:IArticle}) {
               <Comment comment={comment} key={comment.id} />
             ))
           }
+          <div className="leaveComment">
+            <Button>Leave a comment</Button>
+          </div>
         </div>
       </div>
     );

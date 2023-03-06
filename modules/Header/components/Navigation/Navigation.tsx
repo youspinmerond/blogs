@@ -10,7 +10,7 @@ export default function Navigation() {
         <Link href="/" className="home">Home</Link>
         <Link href="/about" className="about">About</Link>
         <Link href="#" className="search">Search</Link>
-        <Link href="#" className="login">Sign in</Link>
+        <Link href="/login" className="login">Sign in</Link>
         <Link href="#" className="register">Sign up</Link>
         <Link href="#" className={styles.support}>
           <Image src={coffee.src} alt="Coffee" width={16} height={16}/>

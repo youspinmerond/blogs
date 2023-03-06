@@ -9,7 +9,9 @@ interface IUser {
 
 export default async function createUser(req: NextApiRequest, res: NextApiResponse) {
   
-  const body:IUser = req.body;
+  if(req.method !== "PUT") return res.status(400).json({message:"Wrong method, use PUT"});
+  
+  const body:IUser = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   if(!body) return res.status(400).json({message:"Wrong body fields."});
   if(!body.password) return res.status(400).json({message:"You didn't specified \"password\" field."});

@@ -1,7 +1,14 @@
+import Head from "next/head";
+
 export default function Layout({children}:any) {
   return (
-    <div>
-      {children}
-    </div>
+    <>
+      <Head>
+        <title>Blogs, IT</title>
+      </Head>
+      <div>
+        {children}
+      </div>
+    </>
   );
 }
