@@ -21,7 +21,6 @@ export default function Register() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if(!res.message) return setMessage("ok");
         if(res.message) return setMessage(res.message);
       });

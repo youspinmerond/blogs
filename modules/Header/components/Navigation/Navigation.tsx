@@ -12,7 +12,7 @@ export default function Navigation() {
       <div className={styles.nav}>
         <Link href="/" className="home">Home</Link>
         <Link href="/about" className="about">About</Link>
-        <Link href="#" className="search">Search</Link>
+        <Link href="/search" className="search">Search</Link>
         {
           user ? <Link href="/profile">{user.name}</Link>
             : (
