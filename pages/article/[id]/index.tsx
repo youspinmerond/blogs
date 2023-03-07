@@ -8,6 +8,7 @@ interface IArticle {
   title: string;
   body: string;
   userId: number;
+  rank: number;
   createdAt: string;
   Comment: IComment[];
 }
@@ -35,8 +36,9 @@ export default function Article({article}: {article:IArticle}) {
           {article.body}
         </div>
         <div className={styles.bodyBottom}>
-          Author: {article.userId},<br/>
-          Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}
+          <div>Rank: <Button>Increase</Button>{article.rank}<Button type="red">Decrease</Button></div>
+          <p>Author: {article.userId},</p>
+          <p>Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}</p>
         </div>
         <div className={styles.comments}>
           <h2>Comments</h2>

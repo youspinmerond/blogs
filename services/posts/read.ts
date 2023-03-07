@@ -12,6 +12,7 @@ export default async function readPost(id:number) {
       body: true,
       userId: true,
       Comment: true,
+      rank: true,
       createdAt: true
     }
   });

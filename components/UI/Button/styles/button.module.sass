@@ -1,6 +1,21 @@
 @import ../../../../styles/variables
-  
-.button
+
+.default
+  background: $blue
+  border: 0
+  color: white
+  border-radius: .25rem
+  cursor: pointer
+  transition: .25s
+  font-weight: 700
+  padding: .5rem
+  text-decoration: none
+
+.default:hover
+  transition: .5s
+  background: $darkBlue
+
+.defaultHover
   background: 0
   border: 0
   border-radius: .25rem
@@ -8,12 +23,26 @@
   transition: .25s
   font-weight: 700
   padding: .5rem
+  text-decoration: none
 
-.button:hover
+.defaultHover:hover
   border: 0
   background: 0
   cursor: pointer
   transition: .5s
-  text-decoration: none
   background: $blue
   color: white
+
+.red
+  background: $red
+  border: 0
+  border-radius: .25rem
+  cursor: pointer
+  transition: .25s
+  font-weight: 700
+  padding: .5rem
+  color: $white
+
+.red:hover
+  background: $darkRed
+  transition: .5s

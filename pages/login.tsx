@@ -2,7 +2,7 @@ import styles from "styles/auth.module.sass";
 import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface IBody {
   name?: string,
@@ -12,8 +12,9 @@ interface IBody {
 
 export default function Login() {
 
-  const [mistake, setMistake] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
+  const [mistake, setMistake] = useState<boolean>(false);
   async function sub(event: any ) {
     event.preventDefault();
     
@@ -24,7 +25,7 @@ export default function Login() {
       
     body.password = event.target.password.value;
 
-    let user = await fetch("http://localhost:3000/api/users/login", {
+    const user = await fetch("http://localhost:3000/api/users/login", {
       method: "PUT",
       body: JSON.stringify(body)
     })
@@ -34,6 +35,9 @@ export default function Login() {
       setMistake(true);
     } else {
       localStorage.setItem("token", user.token);
+
+      dispatch({type:"set", payload:user});
+
       if(mistake === true) setMistake(false);
     } 
   }

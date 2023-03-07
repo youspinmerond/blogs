@@ -1,13 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
 import Link from "next/link";
 import styles from "../styles/profile.module.sass";
 import coffee from "public/coffee.svg";
+
 export default function Profile() {
 
+
   const user = useSelector((state: any) => state).login;
+  const dispatch = useDispatch();
+
   console.log(user);
 
   if(user === false) return (
@@ -48,6 +52,7 @@ export default function Profile() {
         </div>
       </div>
       <div className={styles.button}>
+        <Button type="red" onClick={() => {localStorage.removeItem("token"); dispatch({type:"set", payload:false});}}>Sign out</Button>
         <Button>Save</Button>
       </div>
     </section>

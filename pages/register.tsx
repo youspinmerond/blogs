@@ -1,10 +1,12 @@
 import styles from "../styles/auth.module.sass";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
 import { useState } from "react";
 
 export default function Register() {
+
+  const dispatch = useDispatch();
   const [message, setMessage] = useState<string>("");
 
   async function sub(e: any) {
@@ -21,7 +23,11 @@ export default function Register() {
     })
       .then(res => res.json())
       .then(res => {
-        if(!res.message) return setMessage("ok");
+        if(!res.message) {
+          dispatch({type:"set", payload:res});
+          setMessage("ok");
+          return;
+        };
         if(res.message) return setMessage(res.message);
       });
   }
