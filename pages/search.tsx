@@ -21,7 +21,7 @@ export default function Search() {
   }
   return (
     <section className={styles.section}>
-      <h1>What you want to find?</h1>
+      <h1>What do you want to find?</h1>
       <br />
       <form onSubmit={(event: any) => {
         sub(event);

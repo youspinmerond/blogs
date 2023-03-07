@@ -16,7 +16,7 @@ export default function About() {
         <h3>What I did for just now:</h3>
         <ul className={styles.ul}>
           <li>
-            <ul className={styles.ul}>
+            <ul >
               Back-end
               <li>API</li>
               <li>Login, Register, all what you want.</li>
@@ -25,7 +25,7 @@ export default function About() {
           </li>
           <br />
           <li>
-            <ul className={styles.ul}>
+            <ul >
               Front-end
               <li>Index, about, profile, posts pages.</li>
               <li>Auth system, using localStorage.</li>
@@ -33,16 +33,16 @@ export default function About() {
           </li>
           <br />
           <li>
-            <ul className={styles.ul}>
+            <ul >
               TODO
               <li>
-                <ul className={styles.ul}>
+                <ul >
                   Back-end
                   <li>Learn Nest, and write addition API, which can be used instead original API.</li>
                 </ul>
               </li>
               <li>
-                <ul className={styles.ul}>
+                <ul >
                   Front-end
                   <li>Find design.</li>
                   <li>Finish pages.</li>
