@@ -2,6 +2,8 @@ import { GetServerSideProps } from "next";
 import Comment from "@/components/comment/Comment";
 import Button from "@/components/UI/Button/Button";
 import styles from "../../../styles/article.module.sass";
+import { useSelector } from "react-redux";
+import { FormEvent, useRef } from "react";
 
 interface IArticle {
   id: number;
@@ -23,6 +25,25 @@ interface IComment {
 }
 
 export default function Article({article}: {article:IArticle}) {
+  const user = useSelector((state: any) => state).login;
+
+  const ref = useRef<any>(null);
+  
+  function showComment() {
+    const display = ref.current.style.display;
+    if(display === "none") {
+      ref.current.style.display = "block";
+    } else {
+      ref.current.style.display = "none";
+    }
+  }
+
+  function sub(e: FormEvent) {
+    e.preventDefault();
+    const target = e.target as typeof e.target & { body: {value: string}};
+    console.log(target.body.value);
+  }
+
   if(!article) {
     return;
 
@@ -48,7 +69,18 @@ export default function Article({article}: {article:IArticle}) {
             ))
           }
           <div className="leaveComment">
-            <Button>Leave a comment</Button>
+            { user === false ? null
+              : (
+                <>
+                  <Button onClick={showComment}>Leave a comment</Button>
+                  <div style={{display:"none"}} className={styles.leaveComment} ref={ref}>
+                    <form onSubmit={(e) => sub(e)} method="post">
+                      <textarea name="body" placeholder="Body" minLength={30} style={{minHeight:"6rem", maxHeight:"6rem", maxWidth:"12rem", minWidth:"12rem"}}></textarea>
+                      <Button>Submit</Button>
+                    </form>
+                  </div>
+                </>
+              ) }
           </div>
         </div>
       </div>

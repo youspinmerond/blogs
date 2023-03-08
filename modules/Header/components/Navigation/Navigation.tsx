@@ -30,7 +30,7 @@ export default function Navigation() {
         }
         <Link href="#" className={styles.support}>
           <Image src={coffee.src} alt="Coffee" width={16} height={16}/>
-          <span>Buy Us A Coffe</span>
+          <span>Buy Us A Coffee</span>
         </Link>
       </div>
       <button className={styles.navPhone}>
