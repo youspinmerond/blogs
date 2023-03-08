@@ -14,7 +14,13 @@ export default function Navigation() {
         <Link href="/about" className="about">About</Link>
         <Link href="/search" className="search">Search</Link>
         {
-          user ? <Link href="/profile">{user.name}</Link>
+          user ? 
+            (
+              <>
+                <Link href="/createPost">Write Article</Link>
+                <Link href="/profile">{user.name}</Link>
+              </>
+            )
             : (
               <>
                 <Link href="/login" className="login">Sign in</Link>

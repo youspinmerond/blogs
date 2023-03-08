@@ -46,6 +46,7 @@ export default function About() {
                   Front-end
                   <li>Find design.</li>
                   <li>Finish pages.</li>
+                  <li>Make &ldquo;create article&rdquo; beauty</li>
                 </ul>
               </li>
             </ul>
@@ -54,6 +55,19 @@ export default function About() {
         <br />
         <h3>For this moment</h3>
         <p>You can use API and write your own client.</p>
+      </div>
+      <div>
+        <h2>Edits story:</h2>
+        <ul className={styles.ul}>
+          <li>
+            <ul>
+              8 March
+              <li>Added create article page.</li>
+              <li>Few features.</li>
+              <li>Profile page edited.</li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </section>
   );

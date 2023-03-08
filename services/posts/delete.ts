@@ -1,7 +1,7 @@
-import verify from "../verify"
-import { PrismaClient } from "@prisma/client"
+import verify from "../verify";
+import { PrismaClient } from "@prisma/client";
 import readPost from "./read";
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 interface IBody {
   token: string;
@@ -23,13 +23,13 @@ interface IUser {
 
 export default async function deletePost({token, id}:IBody) {
   
-  const user: IUser = verify(token)
-  if(!user) return "mistake"
-  if(user.status === "BANNED") return "mistake"
+  const user: IUser = verify(token);
+  if(!user) return "mistake";
+  if(user.status === "BANNED") return "mistake";
 
-  const findPost = await readPost(id)
-  if(findPost === null) return "mistake"
-  if(findPost?.userId !== user.id) return "mistake"
+  const findPost = await readPost(id);
+  if(findPost === null) return "mistake";
+  if(findPost?.userId !== user.id) return "mistake";
 
   let result;
   try {
@@ -37,9 +37,9 @@ export default async function deletePost({token, id}:IBody) {
       where: {
         id: id
       }
-    })
-    result = "succesful"
+    });
+    result = "succesful";
   } catch {
-    result = "mistake"
+    result = "mistake";
   }
 }

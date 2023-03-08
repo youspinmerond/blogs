@@ -12,8 +12,6 @@ export default function Profile() {
   const user = useSelector((state: any) => state).login;
   const dispatch = useDispatch();
 
-  console.log(user);
-
   if(user === false) return (
     <>
       <div>You&apos;re not logged in.</div>
@@ -23,7 +21,7 @@ export default function Profile() {
 
   return (
     <section className={styles.section}>
-      {user.status === "BANNED" ? <div>YOURE BANNED</div> : null}
+      {user.status === "BANNED" ? <h1>YOURE BANNED</h1> : null}
       <div className={styles.profileTop}>
         <div className={styles.avatar}>
           {user.avatar === "null" ? <Image width={32} height={32} src={coffee.src} alt="user avatar" /> : <Image width={128} height={128} src={user.avatar} alt="user avatar" />}
@@ -33,6 +31,7 @@ export default function Profile() {
           <div className="des">Its your profile, you can edit it and see additional information.</div>
         </div>
       </div>
+      <h1>Profile information:</h1>
       <div className={styles.settings}>
         <div className={styles.inline}>
           <h3>Email: </h3>
@@ -51,9 +50,10 @@ export default function Profile() {
           <Input disabled value={user.role ? user.role.join(" ") : "Empty"}/>
         </div>
       </div>
-      <div className={styles.button}>
+      <h1>Actions:</h1>
+      <div className={styles.buttons}>
         <Button type="red" onClick={() => {localStorage.removeItem("token"); dispatch({type:"set", payload:false});}}>Sign out</Button>
-        <Button>Save</Button>
+        <Button disabled>Save</Button>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if(req.method !== "POST") return res.status(400).json({message:"Wrong method. Use POST"});
 
-  const body = req.body;
+  const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
   if(!body.post.title) return res.status(400).json({message:"Specify \"title\" field;"});
   if(!body.post.body) return res.status(400).json({message:"Specify \"body\" field;"});
 
