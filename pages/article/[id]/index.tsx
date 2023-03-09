@@ -3,7 +3,7 @@ import Comment from "@/components/comment/Comment";
 import Button from "@/components/UI/Button/Button";
 import styles from "../../../styles/article.module.sass";
 import { useSelector } from "react-redux";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 interface IArticle {
   id: number;
@@ -13,7 +13,7 @@ interface IArticle {
   rank: number;
   createdAt: string;
   Comment: IComment[];
-}
+};
 
 interface IComment {
   id: number;
@@ -27,26 +27,42 @@ interface IComment {
 export default function Article({article}: {article:IArticle}) {
   const user = useSelector((state: any) => state).login;
 
-  const ref = useRef<any>(null);
+  const [mistake, setMistake] = useState<any>(null);
+
+  const leaveComment = useRef<any>(null);
+  const comments = useRef<any>(null);
   
   function showComment() {
-    const display = ref.current.style.display;
+    const display = leaveComment.current.style.display;
     if(display === "none") {
-      ref.current.style.display = "block";
+      leaveComment.current.style.display = "block";
     } else {
-      ref.current.style.display = "none";
+      leaveComment.current.style.display = "none";
     }
   }
 
   function sub(e: FormEvent) {
     e.preventDefault();
     const target = e.target as typeof e.target & { body: {value: string}};
-    console.log(target.body.value);
+
+    const body = {
+      comment: {
+        PostId: article.id,
+        body: target.body.value
+      },
+      token: localStorage.getItem("token")
+    };
+    fetch("http://localhost:3000/api/comments/create", {
+      method: "POST",
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(res => res.id ? res : setMistake(res.message));
+    body;
   }
 
   if(!article) {
-    return;
-
+    return <h1>{article}</h1>;
   } else {
     return (
       <div className={styles.article}>
@@ -61,7 +77,7 @@ export default function Article({article}: {article:IArticle}) {
           <p>Author: {article.userId},</p>
           <p>Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}</p>
         </div>
-        <div className={styles.comments}>
+        <div ref={comments} className={styles.comments}>
           <h2>Comments</h2>
           {
             article.Comment.map((comment: IComment) => (
@@ -73,7 +89,10 @@ export default function Article({article}: {article:IArticle}) {
               : (
                 <>
                   <Button onClick={showComment}>Leave a comment</Button>
-                  <div style={{display:"none"}} className={styles.leaveComment} ref={ref}>
+                  <div style={{display:"none"}} className={styles.leaveComment} ref={leaveComment}>
+                    {
+                      mistake === null ? null : <div style={{color:"red"}}>{mistake}</div>
+                    }
                     <form onSubmit={(e) => sub(e)} method="post">
                       <textarea name="body" placeholder="Body" minLength={30} style={{minHeight:"6rem", maxHeight:"6rem", maxWidth:"12rem", minWidth:"12rem"}}></textarea>
                       <Button>Submit</Button>

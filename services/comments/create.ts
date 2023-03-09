@@ -1,6 +1,6 @@
 import verify from "../verify";
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 interface IBody {
   comment: comment;
@@ -28,13 +28,13 @@ interface IUser {
 }
 
 export default async function create({comment, token}: IBody) {
-  const user: IUser = await verify(token)
-  if(!user) return "mistake"
-  if(user.status === "BANNED") return "mistake"
+  const user: IUser = await verify(token);
+  if(!user) return "mistake";
+  if(user.status === "BANNED") return "mistake";
 
-  if(!comment) return "mistake"
-  if(!comment.body) return "mistake"
-  if(!comment.PostId) return "mistake"
+  if(!comment) return "mistake";
+  if(!comment.body) return "mistake";
+  if(!comment.PostId) return "mistake";
 
   const result = await prisma.comment.create({
     data:{
@@ -42,8 +42,7 @@ export default async function create({comment, token}: IBody) {
       PostId: comment.PostId,
       UserId: user.id
     }
-  })
-  return result
-
+  });
+  return result;
 
 }
