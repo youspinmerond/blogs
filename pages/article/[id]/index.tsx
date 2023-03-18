@@ -62,14 +62,15 @@ export default function Article({article}: {article:IArticle}) {
     body;
   }
 
-  function score(type: "UP" | "DOWN") {
+  function score(score: "UP" | "DOWN") {
+    
+    const body = {
+      score: score,
+      articleId: article.id,
+      token: localStorage.getItem("token")
+    };
 
-    type;
-    axios.get("/api/votes/"+article.id, {
-      params: {
-        id: article.id
-      }
-    })
+    axios.post("/api/posts/"+article.id+"/vote", body)
       .then(res => console.log(res))
       .catch(e => console.log(e));
   }
@@ -83,10 +84,15 @@ export default function Article({article}: {article:IArticle}) {
           <h1>{article.title}</h1>
         </div>
         <div className={styles.body}>
+          1
           {article.body}
         </div>
         <div className={styles.bodyBottom}>
-          <div>Rank: <Button onClick={() => score("UP")}>Increase</Button>{article.rank}<Button type="red">Decrease</Button></div>
+          <div>
+            Rank:
+            <Button onClick={() => score("UP")}>Increase</Button>
+            {article.rank}
+            <Button onClick={() => score("DOWN")} type="red">Decrease</Button></div>
           <p>Author: {article.userId},</p>
           <p>Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}</p>
         </div>

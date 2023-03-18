@@ -1,4 +1,5 @@
 import find from "./find";
+import create from "./create";
 
-const vote = { find: find };
+const vote = { find, create };
 export default vote;

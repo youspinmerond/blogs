@@ -31,7 +31,7 @@ model Post {
 }
 
 model User {
-  id         Int       @id @unique @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   avatar     String
   email      String    @unique
   name       String    @unique
@@ -49,9 +49,12 @@ model User {
 model Vote {
   score    VoteScore
   type     VoteType
-  authorId Int       @unique
-  fieldId  Int       @id @unique
-  user     User      @relation(fields: [authorId], references: [id])
+  fieldId  Int       @id
+  createdAt DateTime @default(now())
+
+  User  User @relation(fields: [authorId], references: [id])
+  authorId Int @unique
+  
 }
 
 enum VoteScore {

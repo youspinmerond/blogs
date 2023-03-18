@@ -17,7 +17,6 @@ export default async function createUser(req: NextApiRequest, res: NextApiRespon
   if(!body.password) return res.status(400).json({message:"You didn't specified \"password\" field."});
   
   const result = await user.login({email: body.email, name: body.name, password: body.password});
-  console.log(result);
   if(!result) return res.status(500).json({message:"Something wrong. Or your data wrong?"});
   return res.status(200).json(result);
   

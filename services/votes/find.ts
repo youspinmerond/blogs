@@ -4,11 +4,12 @@ const prisma = new PrismaClient();
 export default async function find(id: number) {
   const response = await prisma.vote.findUnique({
     where: {
-      userId: id
+      authorId: id
     },
     select: {
+      authorId: true,
       score: true,
-      user: true
+      type: true
     }
   });
   return response;

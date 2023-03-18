@@ -35,7 +35,6 @@ export default async function login(user:IUser) {
     return res = null;
 
   } else if (user.name) {
-    console.log(user);
     const result: any = await prisma.user.findUnique({
       where: {
         name: user.name
