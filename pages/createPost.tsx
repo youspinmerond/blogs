@@ -27,6 +27,8 @@ export default function CreatePage() {
       .then(res => {
         if(res.id) {
           location.href = "http://localhost:3000/article/"+res.id;
+        } else {
+          console.error(res);
         }
       });
   }

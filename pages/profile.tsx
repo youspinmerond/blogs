@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import Image from "next/image";
 import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
@@ -6,12 +7,15 @@ import Link from "next/link";
 import styles from "../styles/profile.module.sass";
 import coffee from "public/coffee.svg";
 import { FormEvent } from "react";
+import axios from "axios";
 
 export default function Profile() {
 
 
   const user = useSelector((state: any) => state).login;
   const dispatch = useDispatch();
+  
+  const [selectedImage, setSelectedImage] = useState<any>("");
 
   if(user === false) return (
     <>
@@ -20,20 +24,16 @@ export default function Profile() {
     </>
   );
 
-  function sub(e: FormEvent) {
+  async function sub(e: FormEvent) {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      email: { value: string },
-      avatar: {value: string }
-    };
-    const body = {
-      email: target.email.value,
-      avatar: target.avatar.value
-    };
-    fetch("http://localhost:3000/api/img", {
-      method: "POST",
-      body: JSON.stringify(body)
-    });
+
+    const form = new FormData();
+
+    form.append("value", selectedImage);
+
+    axios.post("/api/img", form)
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
   }
 
   return (
@@ -65,7 +65,21 @@ export default function Profile() {
           </div>
           <div className={styles.inline}>
             <h3>Avatar: </h3>
-            { user.avatar === "null" ? <Input name="avatar" type="file" /> : "avatar"}
+            { user.avatar === "null" ?
+              <Input
+                name="avatar"
+                type="file"
+                onChange={({target}: any) => {
+                  if(target.files[0]) {
+                    const file = target.files[0];
+                    setSelectedImage(URL.createObjectURL(file));
+                  };
+                }}
+              /> : "avatar"
+            }
+            {
+              selectedImage ? <Image src={selectedImage} alt="your img" width={50} height={50}/> : null
+            }
           </div>
           <div className={styles.inline}>
             <h3>Roles: </h3>

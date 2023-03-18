@@ -26,7 +26,7 @@ interface IUser {
 
 export async function createPost({post, token}: IBody) {
 
-  const user: IUser = verify(token);
+  const user: false | IUser = verify(token);
   
   if(!user) return "mistake";
   if(user.status === "BANNED") return "mistake";

@@ -35,6 +35,7 @@ export default async function login(user:IUser) {
     return res = null;
 
   } else if (user.name) {
+    console.log(user);
     const result: any = await prisma.user.findUnique({
       where: {
         name: user.name
@@ -53,6 +54,7 @@ export default async function login(user:IUser) {
       }
     });
     const token = genToken(result);
+    console.log(result?.password === await bcrypt.hash(user.password, salt));
     if(result?.password === await bcrypt.hash(user.password, salt)) return res = {...result, password: undefined, token: token};
     return res = null;
   }

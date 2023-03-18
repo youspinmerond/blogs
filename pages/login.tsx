@@ -20,7 +20,11 @@ export default function Login() {
     
     let body:IBody = {};
     
-    event.target.emailname.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) === null
+    event
+      .target
+      .emailname
+      .value
+      .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) === null
       ? body.name = event.target.emailname.value : body.email = event.target.emailname.value;
       
     body.password = event.target.password.value;
@@ -31,11 +35,12 @@ export default function Login() {
     })
       .then(res => res.json());
     
+    console.log(user);
+
     if(user.message) {
       setMistake(true);
     } else {
       localStorage.setItem("token", user.token);
-
       dispatch({type:"set", payload:user});
 
       if(mistake === true) setMistake(false);

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { GetServerSideProps } from "next";
 import Comment from "@/components/comment/Comment";
 import Button from "@/components/UI/Button/Button";
@@ -61,6 +62,18 @@ export default function Article({article}: {article:IArticle}) {
     body;
   }
 
+  function score(type: "UP" | "DOWN") {
+
+    type;
+    axios.get("/api/votes/"+article.id, {
+      params: {
+        id: article.id
+      }
+    })
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+  }
+
   if(!article) {
     return <h1>{article}</h1>;
   } else {
@@ -73,16 +86,16 @@ export default function Article({article}: {article:IArticle}) {
           {article.body}
         </div>
         <div className={styles.bodyBottom}>
-          <div>Rank: <Button>Increase</Button>{article.rank}<Button type="red">Decrease</Button></div>
+          <div>Rank: <Button onClick={() => score("UP")}>Increase</Button>{article.rank}<Button type="red">Decrease</Button></div>
           <p>Author: {article.userId},</p>
           <p>Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}</p>
         </div>
         <div ref={comments} className={styles.comments}>
           <h2>Comments</h2>
           {
-            article.Comment.map((comment: IComment) => (
+            article.Comment ? article.Comment.map((comment: IComment) => (
               <Comment comment={comment} key={comment.id} />
-            ))
+            )) : null
           }
           <div className="leaveComment">
             { user === false ? null

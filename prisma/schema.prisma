@@ -22,7 +22,7 @@ model Post {
   id        Int       @id @default(autoincrement())
   title     String
   body      String
-  rank      Int       @default(0)
+  rank      Int
   createdAt DateTime  @default(now())
   userId    Int
   status    status    @default(AVIABLE)
@@ -31,7 +31,7 @@ model Post {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
+  id         Int       @id @unique @default(autoincrement())
   avatar     String
   email      String    @unique
   name       String    @unique
@@ -43,15 +43,15 @@ model User {
   status     status    @default(AVIABLE)
   Comment    Comment[]
   Post       Post[]
-  Vote       Vote[]
+  Vote       Vote?
 }
 
 model Vote {
-  Score   VoteScore
-  Type    VoteType
-  isVoted Boolean
-  UserId  Int       @id
-  User    User      @relation(fields: [UserId], references: [id])
+  score    VoteScore
+  type     VoteType
+  authorId Int       @unique
+  fieldId  Int       @id @unique
+  user     User      @relation(fields: [authorId], references: [id])
 }
 
 enum VoteScore {
