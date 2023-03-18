@@ -30,6 +30,5 @@ export default async function create({score, type, fieldId, authorId}: IVote) {
       rank: score === "UP" ? readPost?.rank+1 : readPost?.rank - 1 
     }
   });
-  console.log(result, resultPost);
   return [result, resultPost];
 }

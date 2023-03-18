@@ -19,14 +19,19 @@ async (
   if(req.method == "POST") {
     if(!body.token) res.status(403).json("Forbidden.");
     const user = verify(body.token);
+
     if(typeof user === "boolean" || typeof user === "string") return;
     
-    let resl = await vote.find(body.articleId);
+    let resl = await vote.find(user.id, body.articleId);
     if(!resl) {
       const creating = await vote.create(
         {score: body.score, type: "POST", fieldId: body.articleId, authorId: user.id}
       );
       res.status(200).json(creating);
+    } else {
+      if("score" in resl && resl.score === body.score) return;
+      const updating = await vote.update({fieldId: body.articleId, authorId: user.id, score: body.score});
+      res.status(200).json(updating);
     }
 
   } else {

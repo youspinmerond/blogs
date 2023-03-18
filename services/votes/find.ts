@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export default async function find(id: number) {
-  const response = await prisma.vote.findUnique({
+export default async function find(authorId: number, fieldId: number) {
+  const response = await prisma.vote.findMany({
     where: {
-      authorId: id
+      AND: [
+        {
+          authorId: authorId,
+          fieldId: fieldId
+        }
+      ]
     },
     select: {
       authorId: true,

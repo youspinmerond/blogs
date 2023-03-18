@@ -25,7 +25,7 @@ interface IComment {
   status: "AVIABLE" | "BANNED";
 }
 
-export default function Article({article}: {article:IArticle}) {
+export default function Article({article}: {article:IArticle | {message: string}}) {
   const user = useSelector((state: any) => state).login;
 
   const [mistake, setMistake] = useState<any>(null);
@@ -43,6 +43,7 @@ export default function Article({article}: {article:IArticle}) {
   }
 
   function sub(e: FormEvent) {
+    if("message" in article) return;
     e.preventDefault();
     const target = e.target as typeof e.target & { body: {value: string}};
 
@@ -63,7 +64,8 @@ export default function Article({article}: {article:IArticle}) {
   }
 
   function score(score: "UP" | "DOWN") {
-    
+    if("message" in article) return;
+
     const body = {
       score: score,
       articleId: article.id,
@@ -75,8 +77,8 @@ export default function Article({article}: {article:IArticle}) {
       .catch(e => console.log(e));
   }
 
-  if(!article) {
-    return <h1>{article}</h1>;
+  if("message" in article) {
+    return <h1>{article.message}</h1>;
   } else {
     return (
       <div className={styles.article}>
