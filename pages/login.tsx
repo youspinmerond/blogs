@@ -34,8 +34,6 @@ export default function Login() {
       body: JSON.stringify(body)
     })
       .then(res => res.json());
-    
-    console.log(user);
 
     if(user.message) {
       setMistake(true);
@@ -63,7 +61,7 @@ export default function Login() {
           </label>
           <Input name="emailname" type="text" placeholder="Name or Email" required/>
           <Input name="password" type="password" placeholder="Password" required />
-          <Button>Submit</Button>
+          <Button typeButton="submit">Submit</Button>
 
         </form>
       </div>

@@ -6,6 +6,8 @@
 .textarea
   margin: 2rem 0
   border: 2px solid $blue
+  max-height: 25rem
+  min-height: 25rem
 
 .right
   float: right
@@ -21,4 +23,27 @@
     margin: 0 0 0 2rem
     &>li>ul
       margin: 0 0 0 2rem
-    
+
+  
+.addParagraph
+  opacity: 0
+  transition: .5s
+  
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+  border: 2px dashed $blue
+  padding: 1rem 4rem
+  
+  &Left
+    display: flex
+    align-items: center
+    cursor: pointer
+    user-select: none
+  &Plus
+    font-size: 2rem
+
+  &:hover
+    opacity: 1
+    transition: 1s

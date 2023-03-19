@@ -56,7 +56,7 @@ export default function Register() {
           <Input required name="email" placeholder="Email"/>
           <Input required type="password" name="password1" placeholder="Password 1"/>
           <Input required type="password" name="password2" placeholder="Password 2"/>
-          <Button>Submit</Button>
+          <Button typeButton="submit">Submit</Button>
         </form>
       </section>
     );
