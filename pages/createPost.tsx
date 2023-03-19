@@ -2,6 +2,7 @@ import styles from "../styles/createpost.module.sass";
 import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
 import Menu from "@/components/UI/Menu/Menu";
+import { addParagraph } from "@/helpers/textAdding";
 import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { FormEvent } from "react";
@@ -12,31 +13,22 @@ export default function CreatePage() {
   const [editor, setEditor] = useState<"visual" | "source">("visual");
   const visual = useRef<any>(null);
 
-  const options: {id: number, symbol: string}[] = [
-    {id: 1, symbol:"h1"},
-    {id: 2, symbol:"h2"},
-    {id: 3, symbol:"h3"},
-    {id: 4, symbol:"b"},
-    {id: 5, symbol:"i"},
-    {id: 6, symbol:"m"},
-    {id: 7, symbol:"d"},
-    {id: 8, symbol:"u"},
-    {id: 9, symbol:"s"},
-    {id: 10, symbol:"c"},
-    {id: 11, symbol:"l"},
+  const options: {id: number, symbol: string, value: string}[] = [
+    {id: 1, symbol:"h1", value: "h1"},
+    {id: 2, symbol:"h2", value: "h2"},
+    {id: 3, symbol:"h3", value: "h3"},
+    {id: 4, symbol:"b", value: "b"},
+    {id: 5, symbol:"i", value: "i"},
+    {id: 6, symbol:"m", value: "pre"},
+    {id: 7, symbol:"d", value: "strike"},
+    {id: 8, symbol:"u", value: "u"},
+    {id: 10, symbol:"c", value: "span"}
   ];
   const [field, setField] = useState<
   {
-    options: {id: number, symbol: string}[],
-    coords:  {x: number, y: number}
+    options: {id: number, symbol: string, value: string}[],
+    coords:  {x: number, y: number},
   } | null>(null);
-
-  function addParagraph() {
-    const p = document.createElement("p");
-    p.innerText = "New Paragraph";
-    p.contentEditable = "true";
-    visual.current.append(p);
-  }
 
   function sub(e: FormEvent) {
     e.preventDefault();
@@ -85,17 +77,26 @@ export default function CreatePage() {
                   <div className={styles.addParagraph}>
                     <div
                       className={styles.addParagraphLeft}
-                      onClick={() => addParagraph()}>
+                      onClick={() => addParagraph(visual)}>
                       <div className={styles.addParagraphPlus}>+</div>
                       <div className="text">Add Paragraph</div>
                     </div>
                     <div className="right">
                       <Button
+                        typeButton="button"
                         onClick={(e: MouseEvent) => setField({options: options, coords:{x: e.pageX, y: e.pageY}})}>
                           Something else
                       </Button>
                       {
-                        field ? <Menu options={field.options} coords={field.coords}/> : null
+                        field ? 
+                          <Menu
+                            options={field.options}
+                            coords={field.coords}
+                            editor={visual}
+                            fieldState={setField}
+
+                          />
+                          : null
                       }
                     </div>
                   </div>
