@@ -23,7 +23,7 @@ async (
     if(typeof user === "boolean" || typeof user === "string") return;
     
     let resl = await vote.find(user.id, body.articleId);
-    if(!resl) {
+    if(JSON.stringify(resl) === "[]") {
       const creating = await vote.create(
         {score: body.score, type: "POST", fieldId: body.articleId, authorId: user.id}
       );

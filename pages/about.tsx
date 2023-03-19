@@ -61,6 +61,11 @@ export default function About() {
         <ul className={styles.ul}>
           <li>
             <ul>
+              19 March
+              <li>Voting system for posts.</li>
+            </ul>
+            <br />
+            <ul>
               8 March
               <li>Added create article page.</li>
               <li>Few features.</li>

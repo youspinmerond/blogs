@@ -29,6 +29,7 @@ export default function Article({article}: {article:IArticle | {message: string}
   const user = useSelector((state: any) => state).login;
 
   const [mistake, setMistake] = useState<any>(null);
+  const [attention, setAttention] = useState<string | null>(null);
 
   const leaveComment = useRef<any>(null);
   const comments = useRef<any>(null);
@@ -73,8 +74,8 @@ export default function Article({article}: {article:IArticle | {message: string}
     };
 
     axios.post("/api/posts/"+article.id+"/vote", body)
-      .then(res => console.log(res))
-      .catch(e => console.log(e));
+      .then((res: any) => !res.data ? setAttention("No answer") : setAttention("Voted"))
+      .catch(e => !e ? null : setAttention(JSON.stringify(e)));
   }
 
   if("message" in article) {
@@ -90,6 +91,7 @@ export default function Article({article}: {article:IArticle | {message: string}
           {article.body}
         </div>
         <div className={styles.bodyBottom}>
+          {attention !== null ? <span>{attention}</span> : null}
           <div>
             Rank:
             <Button onClick={() => score("UP")}>Increase</Button>
