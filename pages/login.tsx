@@ -30,10 +30,14 @@ export default function Login() {
     body.password = event.target.password.value;
 
     const user = await fetch("http://localhost:3000/api/users/login", {
+      headers: {
+        "mode":"no-cors"
+      },
       method: "PUT",
       body: JSON.stringify(body)
     })
-      .then(res => res.json());
+      .then(res => res.json())
+      .catch(e => console.log(e));
 
     if(user.message) {
       setMistake(true);

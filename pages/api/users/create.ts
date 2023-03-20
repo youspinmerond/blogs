@@ -1,5 +1,6 @@
 import * as user from "@/services/users";
 import { NextApiRequest, NextApiResponse } from "next";
+import CORSMiddleware from "@/middleware/cors";
 
 interface IUser {
   name: string;
@@ -9,8 +10,8 @@ interface IUser {
 }
 
 export default async function createUser(req: NextApiRequest, res: NextApiResponse) {
-  
   const body: IUser = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+  CORSMiddleware(req, res);
 
   if(!body) return res.status(400).json({message:"Wrong body fields."});
   if(!body.name) return res.status(400).json({message:"You didn't specified \"name\" field."});

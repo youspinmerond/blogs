@@ -12,9 +12,13 @@ export default function Layout({children}:any) {
 
   useEffect(() => {
     const token: String | null = localStorage.getItem("token");
+    if(!token) return;
     fetch("http://localhost:3000/api/verify", {
       method: "POST",
-      body: JSON.stringify({token: token, tokenCheck: token})
+      body: JSON.stringify({token: token, tokenCheck: token}),
+      headers: {
+        "mode":"no-cors"
+      }
     })
       .then(res => res.json())
       .then((e:any) => "message" in e ? null : disp(e.result))
