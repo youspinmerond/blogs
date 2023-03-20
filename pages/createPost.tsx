@@ -57,7 +57,7 @@ export default function CreatePage() {
 
   useEffect(() => {
     console.log(text);
-  }, [editor]);
+  }, [text]);
 
   function changingEditor(refEditor: any) {
     if(!refEditor.current) return;
@@ -90,6 +90,20 @@ export default function CreatePage() {
                 <div className={styles.textarea}>
                   <div className="text" ref={visual} dangerouslySetInnerHTML={{__html: text}}>
                   </div>
+                  <textarea
+                    style={{display: "none"}}
+                    readOnly={true}
+                    value={HTMLtoMD(text)}
+                  > {/* HERE PROBLEM*/}
+                    {
+                    /* 
+                    
+                    PROBLEM
+                    
+                    */
+                    }
+
+                  </textarea>
                   <div className={styles.addParagraph}>
                     <div
                       className={styles.addParagraphLeft}

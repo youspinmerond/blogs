@@ -18,7 +18,6 @@ export default async function create({score, type, fieldId, authorId}: IVote) {
       authorId: authorId
     }
   });
-  
   const readPost = await posts.readPost(fieldId);
   if(readPost?.rank === undefined) return "mistake";
   

@@ -43,18 +43,16 @@ model User {
   status     status    @default(AVIABLE)
   Comment    Comment[]
   Post       Post[]
-  Vote       Vote?
+  Votes      Vote[]
 }
 
 model Vote {
-  score    VoteScore
-  type     VoteType
-  fieldId  Int       @id
-  createdAt DateTime @default(now())
-
-  User  User @relation(fields: [authorId], references: [id])
-  authorId Int @unique
-  
+  score     VoteScore
+  type      VoteType
+  authorId  Int
+  fieldId   Int       @id
+  createdAt DateTime  @default(now())
+  User      User      @relation(fields: [authorId], references: [id])
 }
 
 enum VoteScore {

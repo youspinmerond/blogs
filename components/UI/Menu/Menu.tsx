@@ -25,10 +25,11 @@ export default function Menu({options, coords, editor, fieldState}: IMenu) {
       style={
         {top:(coords.y+20).toString()+"px", left:(coords.x+20).toString()+"px"}
       }>
-      <button className={styles.element} onClick={() => {fieldState(null);}}>X</button>
+      <button type="button" className={styles.element} onClick={() => {fieldState(null);}}>X</button>
       {
         options.map((option: IOption) => {
           return <button
+            type="button"
             key={option.id}
             id={option.id.toString()}
             onClick={() => addElement(editor, option.value)}
