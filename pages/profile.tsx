@@ -31,9 +31,7 @@ export default function Profile() {
 
     form.append("value", selectedImage);
 
-    axios.post("/api/img", form)
-      .then(res => console.log(res))
-      .catch(e => console.log(e));
+    axios.post("/api/img", form);
   }
 
   return (

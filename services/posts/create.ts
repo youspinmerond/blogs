@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { JwtPayload } from "jsonwebtoken";
 import verify from "services/verify";
 const prisma = new PrismaClient();
 
@@ -26,8 +27,8 @@ interface IUser {
 
 export async function createPost({post, token}: IBody) {
 
-  const user: false | IUser = verify(token);
-  
+  const user: boolean | string | JwtPayload | IUser = verify(token);
+  if(typeof user === "boolean" || typeof user === "string") return "mistake";
   if(!user) return "mistake";
   if(user.status === "BANNED") return "mistake";
 

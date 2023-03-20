@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Head from "next/head";
 
 export default function Layout({children}:any) {
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.login);
 
   function disp(payload:any) {
     dispatch({type: "set", payload: payload});
@@ -16,8 +17,9 @@ export default function Layout({children}:any) {
       body: JSON.stringify({token: token, tokenCheck: token})
     })
       .then(res => res.json())
-      .then((e:any) => "message" in e ? null : disp(e));
-  }, []);
+      .then((e:any) => "message" in e ? null : disp(e.result))
+      .catch(() => {});
+  }, [user]);
 
   return (
     <>

@@ -7,9 +7,7 @@ import { Provider } from "react-redux";
 
 const lato = Lato({weight:["300", "400", "700", "900"], subsets:["latin"]});
 
-export default function App({ Component, pageProps, user }: any) {
-
-  user;
+export default function App({ Component, pageProps }: any) {
 
   return (
     <Provider store={store}>

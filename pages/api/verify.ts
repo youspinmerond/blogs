@@ -1,5 +1,6 @@
 import verify from "services/verify";
 import { NextApiRequest, NextApiResponse } from "next";
+import { JwtPayload } from "jsonwebtoken";
 
 interface IBody {
   token: string;
@@ -29,13 +30,15 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   if(!body.token) return res.status(400).json({message: "You didn't specified \"token\"."});
 
 
-  const user: IUser = verify(body.token);
+  const user: IUser | boolean | string | JwtPayload = verify(body.token);
   if(!user) return res.status(400).json({message: "No user found."});
+  if(typeof user === "string" || typeof user === "boolean") return res.status(400).json({message: "No user found."});
+  if(!user.role) return res.status(400).json({message: "No user found."});
   if(!user.role.includes("ADMIN")) {
 
     const result = verify(body.tokenCheck);
     res.status(400);
-    return res.status(200).json({ ...result, password: undefined, iat: undefined});
+    return res.status(200).json({ result, password: undefined, iat: undefined});
   }
 
   if(!body.tokenCheck) return res.status(400).json({message: "We didn't found token for check. Send it in \"tokenCheck\" field."});

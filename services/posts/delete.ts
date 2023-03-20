@@ -1,6 +1,8 @@
 import verify from "../verify";
 import { PrismaClient } from "@prisma/client";
 import readPost from "./read";
+import { JwtPayload } from "jsonwebtoken";
+
 const prisma = new PrismaClient();
 
 interface IBody {
@@ -23,7 +25,8 @@ interface IUser {
 
 export default async function deletePost({token, id}:IBody) {
   
-  const user: IUser = verify(token);
+  const user: boolean | string | JwtPayload | IUser = verify(token);
+  if(typeof user === "boolean" || typeof user === "string") return;
   if(!user) return "mistake";
   if(user.status === "BANNED") return "mistake";
 
@@ -42,4 +45,5 @@ export default async function deletePost({token, id}:IBody) {
   } catch {
     result = "mistake";
   }
+  return result;
 }
