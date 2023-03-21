@@ -1,6 +1,6 @@
 import { createPost } from "services/posts/create";
 import { NextApiRequest, NextApiResponse } from "next";
-import CORSMiddleware from "@/middleware/cors";
+import CORSMiddleware from "@/middlewares/cors";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method !== "POST") return res.status(400).json({message:"Wrong method. Use POST"});

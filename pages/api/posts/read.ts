@@ -1,6 +1,6 @@
 import readPost from "@/services/posts/read";
 import { NextApiRequest, NextApiResponse } from "next";
-import CORSMiddleware from "@/middleware/cors";
+import CORSMiddleware from "@/middlewares/cors";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   

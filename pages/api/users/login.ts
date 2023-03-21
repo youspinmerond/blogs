@@ -1,6 +1,6 @@
 import * as user from "@/services/users";
 import { NextApiRequest, NextApiResponse } from "next";
-import CORSMiddleware from "../../../middleware/cors";
+import CORSMiddleware from "../../../middlewares/cors";
 
 interface IUser {
   email?: string;
