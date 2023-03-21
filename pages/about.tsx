@@ -41,6 +41,7 @@ export default function About() {
                 <ul >
                   Back-end
                   <li>Learn Nest, and write addition API, which can be used instead original API.</li>
+                  <li>Rewrite on normally REST :facepalm:</li>
                 </ul>
               </li>
               <li>
@@ -62,6 +63,12 @@ export default function About() {
         <h2>Edits story:</h2>
         <ul className={styles.ul}>
           <li>
+            <ul>
+              21 March
+              <li>Parser for text, which works wrong.</li>
+              <li>Added todos.</li>
+            </ul>
+            <br />
             <ul>
               19 March
               <li>Voting system for posts.</li>
