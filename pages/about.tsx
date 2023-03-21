@@ -47,8 +47,10 @@ export default function About() {
               <li>
                 <ul >
                   Front-end
-                  <li>Find design.</li>
-                  <li>Finish pages.</li>
+                  <s>
+                    <li>Find design.</li>
+                    <li>Finish pages.</li>
+                  </s>
                   <li>Make &ldquo;create article&rdquo; beauty</li>
                 </ul>
               </li>
@@ -67,6 +69,7 @@ export default function About() {
               21 March
               <li>Parser for text, which works wrong.</li>
               <li>Added todos.</li>
+              <li>Started rewriting architecture of project to MVC.</li>
             </ul>
             <br />
             <ul>

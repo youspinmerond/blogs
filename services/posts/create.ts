@@ -7,7 +7,6 @@ interface IBody {
   post: {
     title: string;
     body: string;
-    rank: number;
   };
   token: string;
 }
@@ -28,8 +27,11 @@ interface IUser {
 export async function createPost({post, token}: IBody) {
 
   const user: boolean | string | JwtPayload | IUser = verify(token);
-  if(typeof user === "boolean" || typeof user === "string") return "mistake";
-  if(!user) return "mistake";
+  if(
+    typeof user === "boolean" ||
+    typeof user === "string" ||
+    !user || user.status === "BANNED"
+  ) return "mistake";
   if(user.status === "BANNED") return "mistake";
 
   const result = await prisma.post.create({

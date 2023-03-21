@@ -4,9 +4,10 @@ import Button from "@/components/UI/Button/Button";
 import Menu from "@/components/UI/Menu/Menu";
 import { addParagraph } from "@/helpers/textAdding";
 import { useSelector } from "react-redux";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { FormEvent } from "react";
 import { MDtoHTML, HTMLtoMD } from "@/helpers/md";
+import axios from "axios";
 
 export default function CreatePage() {
   const user = useSelector((state:any) => state).login;
@@ -43,21 +44,17 @@ export default function CreatePage() {
       body: target.body.value
     };
     
-    fetch("http://localhost:3000/api/posts/create", {
-      method: "POST",
-      body: JSON.stringify({post: body, token: localStorage.getItem("token") })
+    const token = localStorage.getItem("token");
+    axios.post("/api/posts", {
+      body: {post: body, token}
     })
-      .then(res => res.json())
       .then(res => {
-        if(res.id) {
-          location.href = "http://localhost:3000/article/"+res.id;
-        }
+        res.status === 201
+        && res.data.id ?
+          location.href = "http://localhost:3000/article/"+res.data.id
+          : null;
       });
   }
-
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
 
   function changingEditor(refEditor: any) {
     if(!refEditor.current) return;

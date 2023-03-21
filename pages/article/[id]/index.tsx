@@ -64,6 +64,13 @@ export default function Article({article}: {article:IArticle | {message: string}
     body;
   }
 
+  function deleteArticle() {
+    if("message" in article) return;
+    axios.delete("/api/posts/"+article.id)
+      .then(res => console.log(res))
+      .catch(e => console.error(e));
+  }
+
   function score(score: "UP" | "DOWN") {
     if("message" in article) return;
 
@@ -83,11 +90,15 @@ export default function Article({article}: {article:IArticle | {message: string}
   } else {
     return (
       <div className={styles.article}>
-        <div className="head">
+        <div className={styles.head}>
           <h1>{article.title}</h1>
+          {
+            user.id === article.userId ?
+              <Button type="red" onClick={() => deleteArticle()}>Delete</Button>
+              : null
+          }
         </div>
         <div className={styles.body}>
-          1
           {article.body}
         </div>
         <div className={styles.bodyBottom}>
