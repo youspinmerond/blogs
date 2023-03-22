@@ -65,13 +65,9 @@ export default function Article(
       },
       token: localStorage.getItem("token")
     };
-    fetch("http://localhost:3000/api/comments/create", {
-      method: "POST",
+    axios.post("/api/comments/", {
       body: JSON.stringify(body)
-    })
-      .then(res => res.json())
-      .then(res => res.id ? res : setMistake(res.message));
-    body;
+    });
   }
 
   function deleteArticle() {
@@ -156,7 +152,7 @@ export default function Article(
                       <textarea
                         name="body"
                         placeholder="Body"
-                        minLength={30}
+                        minLength={10}
                         style={
                           {
                             minHeight:"6rem",
@@ -165,7 +161,7 @@ export default function Article(
                             minWidth:"12rem"
                           }
                         }></textarea>
-                      <Button>Submit</Button>
+                      <Button typeButton="submit">Submit</Button>
                     </form>
                   </div>
                 </>
@@ -178,10 +174,12 @@ export default function Article(
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const article: IArticle = await fetch(
-    "http://localhost:3000/api/posts/read/?id="+ctx.query.id
-  )
-    .then(res => res.json());
+  let article: IArticle | any = await axios.get(
+    "http://localhost:3000/api/posts", {
+      params: {id: ctx.query.id }
+    })
+    .then(res => res.data);
+  article === undefined ? article = {message: "Wrong"} : null;
 
   return {
     props: {

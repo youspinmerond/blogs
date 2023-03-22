@@ -1,5 +1,6 @@
-import verify from "../verify";
 import { PrismaClient } from "@prisma/client";
+import verify from "services/verify";
+import IUser from "@/types/user";
 import { JwtPayload } from "jsonwebtoken";
 const prisma = new PrismaClient();
 
@@ -15,25 +16,13 @@ interface comment {
   status: "AVIABLE" | "BANNED";
 }
 
-interface IUser {
-  id: number;
-  avatar?: string;
-  email: string;
-  name: string;
-  role: string[];
-  rank: number;
-  isVerefied: boolean;
-  createdAt: Date;
-  password: string;
-  status: "AVIABLE" | "BANNED";
-}
-
 export default async function create({comment, token}: IBody) {
-  const user: IUser | string | boolean | JwtPayload = await verify(token);
+  const user: IUser | boolean | JwtPayload | string = await verify(token);
+  
   if(typeof user === "boolean" || typeof user === "string") return "mistake";
   if(!user) return "mistake";
   if(user.status === "BANNED") return "mistake";
-
+  
   if(!comment) return "mistake";
   if(!comment.body) return "mistake";
   if(!comment.PostId) return "mistake";

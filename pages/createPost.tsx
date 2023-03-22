@@ -4,15 +4,15 @@ import Button from "@/components/UI/Button/Button";
 import Menu from "@/components/UI/Menu/Menu";
 import { addParagraph } from "@/helpers/textAdding";
 import { useSelector } from "react-redux";
-import { ChangeEvent, useRef, useState } from "react";
-import { FormEvent } from "react";
+import { ChangeEvent, useRef, useState, FormEvent } from "react";
 import { MDtoHTML, HTMLtoMD } from "@/helpers/md";
 import axios from "axios";
+import IUser from "@/types/user";
 
 export default function CreatePage() {
-  const user = useSelector((state:any) => state).login;
+  const user = useSelector((state:{login: IUser | boolean}) => state.login);
   const [editor, setEditor] = useState<"visual" | "source">("visual");
-  const visual = useRef<any>(null);
+  const visual = useRef(null);
   const [text, setText] = useState<string>("");
 
   const options: {id: number, symbol: string, value: string}[] = [
@@ -68,15 +68,24 @@ export default function CreatePage() {
   }
 
   if(user === false) {
-    return <section className={styles.section}><h1>You&apos;re not logged in.</h1></section>;
+    return <section
+      className={styles.section}>
+      <h1>You&apos;re not logged in.</h1>
+    </section>;
   } else {
     return (
       <>
         <section className={styles.section}>
-          <Button disabled={editor === "visual"} onClick={() => changingEditor(visual)}>
+          <Button
+            disabled={editor === "visual"}
+            onClick={() => changingEditor(visual)}
+          >
             Visual
           </Button>
-          <Button disabled={editor === "source"} onClick={() => changingEditor(visual)}>
+          <Button
+            disabled={editor === "source"}
+            onClick={() => changingEditor(visual)}
+          >
             Text
           </Button>
           <form onSubmit={(e: FormEvent) => sub(e)}>
@@ -85,7 +94,11 @@ export default function CreatePage() {
               editor === "visual"
                 ?
                 <div className={styles.textarea}>
-                  <div className="text" ref={visual} dangerouslySetInnerHTML={{__html: text}}>
+                  <div
+                    className="text"
+                    ref={visual}
+                    dangerouslySetInnerHTML={{__html: text}}
+                  >
                   </div>
                   <textarea
                     style={{display: "none"}}
@@ -111,7 +124,11 @@ export default function CreatePage() {
                     <div className="right">
                       <Button
                         typeButton="button"
-                        onClick={(e: MouseEvent) => setField({options: options, coords:{x: e.pageX, y: e.pageY}})}>
+                        onClick={(e: MouseEvent) => setField(
+                          {
+                            options: options, coords:{x: e.pageX, y: e.pageY}
+                          }
+                        )}>
                           Something else
                       </Button>
                       {
@@ -138,7 +155,10 @@ export default function CreatePage() {
                     placeholder="Body"
                     minLength={100}
                     value={text !== "" ? text : ""}
-                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
+                    onChange={
+                      (e: ChangeEvent<HTMLTextAreaElement>) =>
+                        setText(e.target.value)
+                    }
                     style={
                       {
                         minWidth:"100%",

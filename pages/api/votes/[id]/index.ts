@@ -1,7 +1,9 @@
 import vote from "@/services/votes";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (
+  req: NextApiRequest, res: NextApiResponse
+) => {
   if(req.method === "POST") {
     res.status(201).json({message:"voted"});
   }

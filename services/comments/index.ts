@@ -2,4 +2,5 @@ import create from "./create";
 import deleteComment from "./delete";
 import read from "./read";
 
-export default { create, deleteComment, read };
+const comments = { create, deleteComment, read };
+export default comments;

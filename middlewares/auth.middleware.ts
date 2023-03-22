@@ -1,12 +1,17 @@
 import verify from "@/services/verify";
-import { NextApiResponse } from "next";
 import { Middleware } from "next-api-middleware";
 
-const AuthMiddleware: Middleware = async (req: any, res: NextApiResponse, next) => {
+const AuthMiddleware: Middleware = async (
+  req,
+  res,
+  next
+) => {
 
-  const token = req.body.token;
-  if(token === undefined) return;
-  const user = verify(token);
+  let token: string | undefined = req.body.token;
+  if(token === undefined) token = req.cookies.token;
+  const user = token === undefined ? false : verify(token);
+  if(typeof user === "boolean" || typeof user === "string")
+    return res.status(500);
   req.user = user;
   await next();
 };

@@ -2,7 +2,9 @@ import getNew from "@/services/posts/getNew";
 import { NextApiRequest, NextApiResponse } from "next";
 import CORSMiddleware from "@/middlewares/cors";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest, res: NextApiResponse
+) {
   CORSMiddleware(req, res);
   const posts = await getNew();
   if(!posts) return res.status(500).json({message: "We didn't found posts."});

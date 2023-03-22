@@ -1,5 +1,7 @@
-import * as user from "@/services/users";
-import { NextApiRequest, NextApiResponse } from "next";
+import validMethods from "@/middlewares/validMethods.middleware";
+import users from "@/services/users";
+import { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
+import { use } from "next-api-middleware";
 import CORSMiddleware from "../../../middlewares/cors";
 
 interface IUser {
@@ -8,12 +10,10 @@ interface IUser {
   password: string;
 }
 
-export default async function createUser(
+const handler: NextApiHandler = async (
   req: NextApiRequest, res: NextApiResponse
-) {
+) => {
   CORSMiddleware(req, res);
-  if(req.method !== "PUT")
-    return res.status(400).json({message:"Wrong method, use PUT"});
   
   const body:IUser = typeof req.body === "string" ?
     JSON.parse(req.body) : req.body;
@@ -23,7 +23,7 @@ export default async function createUser(
       {message:"You didn't specified \"password\" field."}
     );
   
-  const result = await user.login(
+  const result = await users.login(
     {email: body.email, name: body.name, password: body.password}
   );
   if(!result)
@@ -33,4 +33,6 @@ export default async function createUser(
   res.setHeader("Set-Cookie","token="+result.token+"; Path=/");
   return res.status(200).json(result);
   
-}
+};
+
+export default use(validMethods("POST"))(handler);
