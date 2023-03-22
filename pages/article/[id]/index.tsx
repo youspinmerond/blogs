@@ -5,6 +5,7 @@ import Button from "@/components/UI/Button/Button";
 import styles from "../../../styles/article.module.sass";
 import { useSelector } from "react-redux";
 import { FormEvent, useRef, useState } from "react";
+import IUser from "@/types/user";
 
 interface IArticle {
   id: number;
@@ -25,16 +26,25 @@ interface IComment {
   status: "AVIABLE" | "BANNED";
 }
 
-export default function Article({article}: {article:IArticle | {message: string}}) {
-  const user = useSelector((state: any) => state).login;
+export default function Article(
+  {article}: {article:IArticle | {message: string}}
+) {
+  const user = useSelector(
+    (state: {login: IUser} | boolean) => typeof state === "boolean" ?
+      state : state.login
+  );
 
-  const [mistake, setMistake] = useState<any>(null);
+  const [mistake, setMistake] = useState<string | null>(null);
   const [attention, setAttention] = useState<string | null>(null);
 
-  const leaveComment = useRef<any>(null);
-  const comments = useRef<any>(null);
+  const leaveComment = useRef<
+    HTMLDivElement | null
+    >(null);
+  const comments = useRef<HTMLDivElement | null>(null);
   
   function showComment() {
+    if(leaveComment.current === null) return;
+
     const display = leaveComment.current.style.display;
     if(display === "none") {
       leaveComment.current.style.display = "block";
@@ -66,9 +76,7 @@ export default function Article({article}: {article:IArticle | {message: string}
 
   function deleteArticle() {
     if("message" in article) return;
-    axios.delete("/api/posts/"+article.id)
-      .then(res => console.log(res))
-      .catch(e => console.error(e));
+    axios.delete("/api/posts/"+article.id);
   }
 
   function score(score: "UP" | "DOWN") {
@@ -81,7 +89,9 @@ export default function Article({article}: {article:IArticle | {message: string}
     };
 
     axios.post("/api/posts/"+article.id+"/vote", body)
-      .then((res: any) => !res.data ? setAttention("No answer") : setAttention("Voted"))
+      .then((res) => !res.data ?
+        setAttention("No answer") : setAttention("Voted")
+      )
       .catch(e => !e ? null : setAttention(JSON.stringify(e)));
   }
 
@@ -93,9 +103,9 @@ export default function Article({article}: {article:IArticle | {message: string}
         <div className={styles.head}>
           <h1>{article.title}</h1>
           {
-            user.id === article.userId ?
+            typeof user !== "boolean" ? user.id === article.userId ?
               <Button type="red" onClick={() => deleteArticle()}>Delete</Button>
-              : null
+              : null : null
           }
         </div>
         <div className={styles.body}>
@@ -107,9 +117,19 @@ export default function Article({article}: {article:IArticle | {message: string}
             Rank:
             <Button onClick={() => score("UP")}>Increase</Button>
             {article.rank}
-            <Button onClick={() => score("DOWN")} type="red">Decrease</Button></div>
+            <Button onClick={
+              () => score("DOWN")
+            }
+            type="red">
+              Decrease
+            </Button>
+          </div>
           <p>Author: {article.userId},</p>
-          <p>Created at: {new Date(article.createdAt).toLocaleDateString()},&nbsp;{new Date(article.createdAt).toLocaleTimeString()}</p>
+          <p>
+            Created at:
+            {new Date(article.createdAt).toLocaleDateString()},
+            &nbsp;{new Date(article.createdAt).toLocaleTimeString()}
+          </p>
         </div>
         <div ref={comments} className={styles.comments}>
           <h2>Comments</h2>
@@ -123,12 +143,28 @@ export default function Article({article}: {article:IArticle | {message: string}
               : (
                 <>
                   <Button onClick={showComment}>Leave a comment</Button>
-                  <div style={{display:"none"}} className={styles.leaveComment} ref={leaveComment}>
+                  <div
+                    style={{display:"none"}}
+                    className={styles.leaveComment}
+                    ref={leaveComment}>
                     {
-                      mistake === null ? null : <div style={{color:"red"}}>{mistake}</div>
+                      mistake === null ?
+                        null
+                        : <div style={{color:"red"}}>{mistake}</div>
                     }
                     <form onSubmit={(e) => sub(e)} method="post">
-                      <textarea name="body" placeholder="Body" minLength={30} style={{minHeight:"6rem", maxHeight:"6rem", maxWidth:"12rem", minWidth:"12rem"}}></textarea>
+                      <textarea
+                        name="body"
+                        placeholder="Body"
+                        minLength={30}
+                        style={
+                          {
+                            minHeight:"6rem",
+                            maxHeight:"6rem",
+                            maxWidth:"12rem",
+                            minWidth:"12rem"
+                          }
+                        }></textarea>
                       <Button>Submit</Button>
                     </form>
                   </div>
@@ -141,9 +177,10 @@ export default function Article({article}: {article:IArticle | {message: string}
   };
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx:any) => {
-
-  const article: IArticle = await fetch("http://localhost:3000/api/posts/read/?id="+ctx.query.id)
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const article: IArticle = await fetch(
+    "http://localhost:3000/api/posts/read/?id="+ctx.query.id
+  )
     .then(res => res.json());
 
   return {

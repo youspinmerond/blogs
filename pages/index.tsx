@@ -11,7 +11,7 @@ interface IPost {
   status: "AVIABLE" | "BANNED";
 }
 
-export default function Home({posts}:any) {
+export default function Home({posts}: {posts: IPost[]}) {
 
   return (
     <div style={{fontFamily:"sans-serif, lato"}}>
@@ -20,12 +20,18 @@ export default function Home({posts}:any) {
         <div className={styles.posts}>
           {
             posts.map((post:IPost) => (
-              <Link className={styles.post} key={post.id} href={"http://localhost:3000/article/"+post.id}>
+              <Link
+                className={styles.post}
+                key={post.id}
+                href={"http://localhost:3000/article/"+post.id}>
                 <div className="top">
                   <h1>{post.title}</h1>
                 </div>
                 <div className="body">
-                  {post.body.length <= 20 ? post.body : post.body.slice(0,50)+"..."}
+                  {
+                    post.body.length <= 20 ?
+                      post.body : post.body.slice(0,50)+"..."
+                  }
                 </div>
                 <div className={styles.postBottom}> 
                   <span>
@@ -44,7 +50,9 @@ export default function Home({posts}:any) {
 }
 
 export async function getServerSideProps() {
-  const posts = await fetch("http://localhost:3000/api/posts/getNew", {method:"GET"})
+  const posts = await fetch("http://localhost:3000/api/posts/getNew", {
+    method:"GET"
+  })
     .then(res => res.json());
 
   return {

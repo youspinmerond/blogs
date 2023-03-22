@@ -36,28 +36,44 @@ export default function Search() {
           {
             results !== undefined && "users" in results ? 
               results.users.map((user: any) => {
-                return <Result key={user.id} name={user.name} type="user" createdAt={user.createdAt} />;
+                return <Result
+                  key={user.id}
+                  name={user.name}
+                  type="user"
+                  createdAt={user.createdAt} />;
               })
               : <div>undefined</div>
           }
           {
             results !== undefined && "postsByTitle" in results ? 
               results.postsByTitle.map((post: any) => {
-                return <Result key={post.id} name={post.title} type="post title" createdAt={post.createdAt} />;
+                return <Result
+                  key={post.id}
+                  name={post.title}
+                  type="post title"
+                  createdAt={post.createdAt} />;
               })
               : null
           }
           {
             results !== undefined && "postsByBody" in results ? 
               results.postsByBody.map((post: any) => {
-                return <Result key={post.id} name={post.title} type="post body" createdAt={post.createdAt} />;
+                return <Result
+                  key={post.id}
+                  name={post.title}
+                  type="post body"
+                  createdAt={post.createdAt} />;
               })
               : null
           }
           {
             results !== undefined && "comments" in results ? 
               results.comments.map((comment: any) => {
-                return <Result key={comment.id} name={comment.id} type="comment" createdAt={comment.createdAt} />;
+                return <Result
+                  key={comment.id}
+                  name={comment.id}
+                  type="comment"
+                  createdAt={comment.createdAt} />;
               })
               : null
           }

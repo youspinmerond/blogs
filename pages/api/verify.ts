@@ -20,19 +20,28 @@ interface IUser {
   status: "AVIABLE" | "BANNED";
 }
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse) {
+export default async function handle(
+  req: NextApiRequest, res: NextApiResponse
+) {
 
-  if(req.method !== "POST") return res.status(400).json({message: "You sent wrong method. Use POST."});
+  if(req.method !== "POST")
+    return res.status(400).json({message: "You sent wrong method. Use POST."});
 
-  const body: IBody = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+  const body: IBody = typeof req.body === "string" ?
+    JSON.parse(req.body) : req.body;
 
-  if(!body) return res.status(400).json({message:"You didn't sent body"});
-  if(!body.token) return res.status(400).json({message: "You didn't specified \"token\"."});
+  if(!body) return res.status(400).json(
+    {message:"You didn't sent body"}
+  );
+  if(!body.token) return res.status(400).json(
+    {message: "You didn't specified \"token\"."}
+  );
 
 
   const user: IUser | boolean | string | JwtPayload = verify(body.token);
   if(!user) return res.status(400).json({message: "No user found."});
-  if(typeof user === "string" || typeof user === "boolean") return res.status(400).json({message: "No user found."});
+  if(typeof user === "string" || typeof user === "boolean")
+    return res.status(400).json({message: "No user found."});
   if(!user.role) return res.status(400).json({message: "No user found."});
   if(!user.role.includes("ADMIN")) {
 
@@ -41,7 +50,15 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     return res.status(200).json({ result, password: undefined, iat: undefined});
   }
 
-  if(!body.tokenCheck) return res.status(400).json({message: "We didn't found token for check. Send it in \"tokenCheck\" field."});
+  if(!body.tokenCheck)
+    return res.status(400).json(
+      {
+        message: [
+          "We didn't found token for check.",
+          " Send it in \"tokenCheck\" field."
+        ].join("")
+      }
+    );
 
   return res.status(200).json(verify(body.tokenCheck));
 }

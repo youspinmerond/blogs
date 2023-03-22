@@ -5,7 +5,10 @@ export default function About() {
     <section className={styles.section}>
       <h1>Blogs</h1>
       <br />
-      <p>Blogs it&apos;s a simple MPA site, written on NextJS, TypeScript, and few another support techniques as SASS, ESLint.</p>
+      <p>
+        Blogs it&apos;s a simple MPA site, written on NextJS, TypeScript,
+        and few another support techniques as SASS, ESLint.
+      </p>
       <br />
       <p>
         My purpose: do simple, minimalistic and usable blog web-site,
@@ -40,7 +43,8 @@ export default function About() {
               <li>
                 <ul >
                   Back-end
-                  <li>Learn Nest, and write addition API, which can be used instead original API.</li>
+                  <li>Learn Nest, and write addition API, which can be used
+                    instead original API.</li>
                   <li>Rewrite on normally REST :facepalm:</li>
                 </ul>
               </li>

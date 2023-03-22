@@ -1,10 +1,15 @@
 {
   "extends": "next/core-web-vitals",
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
     "no-console":"warn",
     "semi":"error",
     "indent": ["error", 2],
     "quotes": ["error", "double"],
-    "no-unused-vars": "error"
+    "no-unused-vars": "error",
+    "max-len":["error", 80],
+    "@typescript-eslint/no-explicit-any": "error"
   }
 }
