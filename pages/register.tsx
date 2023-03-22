@@ -4,6 +4,7 @@ import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
 import { FormEvent, useState } from "react";
 import IUser from "@/types/user";
+import axios from "axios";
 
 interface IFormTarget {
   name: {value: string};
@@ -26,18 +27,16 @@ export default function Register() {
       password1: target.password1.value,
       password2: target.password2.value
     };
-    fetch("http://localhost:3000/api/users/create", {
-      method: "POST",
+    axios.post("http://localhost:3000/api/users/", {
       body: JSON.stringify(body)
     })
-      .then(res => res.json())
       .then(res => {
-        if(!res.message) {
+        if(!res.data.message) {
           dispatch({type:"set", payload:res});
           setMessage("ok");
           return;
         };
-        if(res.message) return setMessage(res.message);
+        if(res.data.message) return setMessage(res.data.message);
       });
   }
 

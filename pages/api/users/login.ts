@@ -16,7 +16,9 @@ const handler: NextApiHandler = async (
   CORSMiddleware(req, res);
   
   const body:IUser = typeof req.body === "string" ?
-    JSON.parse(req.body) : req.body;
+    JSON.parse(req.body) : typeof req.body.body === "string" ?
+      JSON.parse(req.body.body) : req.body.body;
+      
   if(!body) return res.status(400).json({message:"Wrong body fields."});
   if(!body.password)
     return res.status(400).json(

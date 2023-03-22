@@ -1,6 +1,7 @@
 import styles from "styles/auth.module.sass";
 import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
+import axios from "axios";
 import { FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IUser from "@/types/user";
@@ -38,19 +39,14 @@ export default function Login() {
       
     body.password = target.password.value;
 
-    const user = await fetch("http://localhost:3000/api/users/login", {
-      headers: {
-        "mode":"no-cors"
-      },
-      method: "PUT",
+    const user = await axios.post("/api/users/login", {
       body: JSON.stringify(body)
-    })
-      .then(res => res.json());
+    });
 
-    if(user.message) {
+    if(user.data.token === undefined) {
       setMistake(true);
     } else {
-      localStorage.setItem("token", user.token);
+      localStorage.setItem("token", user.data.token);
       dispatch({type:"set", payload:user});
 
       if(mistake === true) setMistake(false);

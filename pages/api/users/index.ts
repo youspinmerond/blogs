@@ -32,10 +32,16 @@ const handler: NextApiHandler = async (
     res.status(200).json(User);
   }
   if(req.method === "POST") {
+    
     const body: IUser & {password1: string, password2: string} =
-    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-
-    if(!body) return res.status(400).json({message:"Wrong body fields."});
+    typeof req.body === "string" ? JSON.parse(req.body).body :
+      typeof req.body.body === "string" ? JSON.parse(req.body.body) :
+        req.body.body;
+        
+    if(body === undefined || typeof body === "string")
+      return res.status(400).json(
+        {message:"Wrong body fields."}
+      );
     if(!body.name)
       return res.status(400).json(
         {message:"You didn't specified \"name\" field."}
