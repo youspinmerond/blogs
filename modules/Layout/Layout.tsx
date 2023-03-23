@@ -15,10 +15,7 @@ export default function Layout({children}:any) {
     if(!token) return;
     fetch("http://localhost:3000/api/verify", {
       method: "POST",
-      body: JSON.stringify({token: token, tokenCheck: token}),
-      headers: {
-        "mode":"no-cors"
-      }
+      body: JSON.stringify({token: token, tokenCheck: token})
     })
       .then(res => res.json())
       .then((e:any) => "message" in e ? null : disp(e.result))

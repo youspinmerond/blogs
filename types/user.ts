@@ -1,12 +1,14 @@
 interface IUser {
   id: number;
-  name: string;
+  avatar?: string;
   email: string;
-  avatar: string;
-  rank: number;
+  name: string;
   role: string[];
-  createdAt: string | Date;
-  status: "BANNED" | "AVIABLE";
-};
+  rank: number;
+  isVerefied: boolean;
+  createdAt: Date;
+  password: string;
+  status: "AVIABLE" | "BANNED";
+}
 
 export default IUser;

@@ -40,9 +40,7 @@ export default function Profile() {
     e.preventDefault();
 
     const form = new FormData();
-
     form.append("value", selectedImage);
-
     axios.post("/api/img", form);
   }
 
@@ -67,7 +65,7 @@ export default function Profile() {
               <Image
                 width={128}
                 height={128}
-                src={user.avatar}
+                src={user.avatar ? user.avatar : ""}
                 alt="user avatar" />
           }
         </div>
@@ -149,7 +147,7 @@ export default function Profile() {
                 "token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
               }
             }>Sign out</Button>
-          <Button>Save</Button>
+          <Button typeButton="submit">Save</Button>
         </div>
       </form>
     </section>

@@ -11,7 +11,6 @@ interface IBody {
 const handler: NextApiHandler = async (
   req: NextApiRequest, res: NextApiResponse
 ) => {
-  CORSMiddleware(req, res);
   if(req.method === "GET") {
     const body: IBody = req.body;
     if(!body.id) return res.status(400).json(
@@ -70,4 +69,6 @@ const handler: NextApiHandler = async (
   }
 };
 
-export default use(validMethods(["GET", "POST", "DELETE"]))(handler);
+export default use(
+  CORSMiddleware, validMethods(["GET", "POST", "DELETE"])
+)(handler);

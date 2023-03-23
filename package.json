@@ -38,6 +38,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-attrs": "^4.1.0",
+    "@types/mime": "^3.0.1",
     "@types/turndown": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",

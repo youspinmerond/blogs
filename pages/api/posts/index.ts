@@ -1,6 +1,7 @@
 import validMethods from "@/middlewares/validMethods.middleware";
 import { NextApiRequest, NextApiResponse } from "next";
 import posts from "@/services/posts/index";
+import CORSMiddleware from "@/middlewares/cors";
 import { use } from "next-api-middleware";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -39,4 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default use(validMethods(["GET","POST", "PUT", "DELETE"]))(handler);
+export default use(
+  CORSMiddleware,
+  validMethods(["GET","POST", "PUT", "DELETE"])
+)(handler);

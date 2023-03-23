@@ -18,7 +18,6 @@ interface IFormTarget {
 }
 
 export default function Login() {
-
   const dispatch = useDispatch();
 
   const [mistake, setMistake] = useState<boolean>(false);
@@ -47,7 +46,7 @@ export default function Login() {
       setMistake(true);
     } else {
       localStorage.setItem("token", user.data.token);
-      dispatch({type:"set", payload:user});
+      dispatch({type:"set", payload:user.data});
 
       if(mistake === true) setMistake(false);
     } 

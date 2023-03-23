@@ -13,7 +13,6 @@ interface IUser {
 const handler: NextApiHandler = async (
   req: NextApiRequest, res: NextApiResponse
 ) => {
-  CORSMiddleware(req, res);
   
   const body:IUser = typeof req.body === "string" ?
     JSON.parse(req.body) : typeof req.body.body === "string" ?
@@ -37,4 +36,4 @@ const handler: NextApiHandler = async (
   
 };
 
-export default use(validMethods("POST"))(handler);
+export default use(validMethods("POST"), CORSMiddleware)(handler);
