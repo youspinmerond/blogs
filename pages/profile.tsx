@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import Input from "@/components/UI/Input/Input";
 import Button from "@/components/UI/Button/Button";
-import Link from "next/link";
+import Authorize from "@/modules/Authorize/Authorize";
 import styles from "../styles/profile.module.sass";
 import coffee from "public/coffee.svg";
 import { FormEvent } from "react";
@@ -21,20 +21,7 @@ export default function Profile() {
   
   const [selectedImage, setSelectedImage] = useState<string>("");
 
-  if(user === false) return (
-    <>
-      <div>You&apos;re not logged in.</div>
-      <h1>
-        You can
-        <Link href="/login">
-          log in
-        </Link>, or
-        <Link href="/register">
-          register
-        </Link>.
-      </h1>
-    </>
-  );
+  if(user === false) return <Authorize />;
 
   async function sub(e: FormEvent) {
     e.preventDefault();

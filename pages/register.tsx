@@ -27,7 +27,7 @@ export default function Register() {
       password1: target.password1.value,
       password2: target.password2.value
     };
-    axios.post("http://localhost:3000/api/users/", {
+    axios.post("/api/users/", {
       body: JSON.stringify(body)
     })
       .then(res => {

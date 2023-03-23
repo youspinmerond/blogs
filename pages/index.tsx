@@ -23,7 +23,7 @@ export default function Home({posts}: {posts: IPost[]}) {
               <Link
                 className={styles.post}
                 key={post.id}
-                href={"http://localhost:3000/article/"+post.id}>
+                href={"/article/"+post.id}>
                 <div className="top">
                   <h1>{post.title}</h1>
                 </div>
